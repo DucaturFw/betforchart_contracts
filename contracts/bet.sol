@@ -21,41 +21,33 @@ contract Bet {
     uint256 public predictrate;
     enum Stage {bet,answer,rag}
     Stage stage;
-
     modifier onlyOracle() {
 	if(oracle!=msg.sender) revert();
         _;	
-
     }
 
     function Bet(uint256 _minanswer, address _oracle, uint256 _predictrate ) {
-	    oracle = _oracle
+        oracle = _oracle
         minanswer = _minanswer
         predictrate = _predictrate
         stage = Stage.bet;
         owner = msg.sender
-
-        //get main bet
-        
     }
     
     function Answer() payable {
         require( msg.value > minanswer );
         opponent = msg.sender;
         stage = Stage.answer;
-        //get answer bet
-        
+
     }
     
     function getWon() {
         require(stage == Stage.rag); 
-        // decide to won
         if (predictrate > rate && owner == msg.sender ) {
             owner.transfer(this.balance);
         } else {
             opponent.transfer(this.balance);
         }
-        
     }
 
    function _(uint256 _rate) onlyOracle {
