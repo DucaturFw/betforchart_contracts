@@ -71,7 +71,8 @@ contract fabric {
     }
 
     function createBet(uint256 _minanswer, uint256 _predictrate) {
-        
+        Bet public betcontract = new Bet(uint256 _minanswer, uint256 _predictrate);
+        betcontract.transfer(this.balance);
     }
 }
 
