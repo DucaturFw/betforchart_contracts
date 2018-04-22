@@ -39,7 +39,7 @@ contract Bet {
         
     }
     
-    function Answer() {
+    function Answer() payable {
         require( msg.value > minanswer );
         opponent = msg.sender;
         stage = Stage.answer;
