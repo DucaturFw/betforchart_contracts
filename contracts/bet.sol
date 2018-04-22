@@ -19,6 +19,9 @@ contract Bet {
     uint256 public rate;
     uint256 public minanswer;
     uint256 public predictrate;
+    //address public oracle = '0x1979C2A9D21F9f8FFB73F0a81CE9823c4F306eaF';
+    address constant public oracle = 0x1979C2A9D21F9f8FFB73F0a81CE9823c4F306eaF;
+
     enum Stage {bet,answer,rag}
     Stage stage;
     modifier onlyOracle() {
@@ -26,8 +29,7 @@ contract Bet {
         _;	
     }
 
-    function Bet(uint256 _minanswer, address _oracle, uint256 _predictrate ) {
-        oracle = _oracle
+    function Bet(uint256 _minanswer, uint256 _predictrate ) {
         minanswer = _minanswer
         predictrate = _predictrate
         stage = Stage.bet;
@@ -56,4 +58,20 @@ contract Bet {
    }
 }    
 
+contract fabric {
+    address public owner;
+
+    modifier onlyOwner() {
+	if(owner!=msg.sender) revert();
+        _;	
+    }
+
+    function fabric() {
+        owner = msg.sender;
+    }
+
+    function createBet(uint256 _minanswer, uint256 _predictrate) {
+        
+    }
+}
 
