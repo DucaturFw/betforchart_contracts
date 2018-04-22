@@ -11,7 +11,24 @@ pragma solidity ^0.4.18;
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND (express or implied).
  */
-    
+   
+contract fabric {
+    address public owner;
+
+    modifier onlyOwner() {
+	if(owner!=msg.sender) revert();
+        _;	
+    }
+
+    function fabric() {
+        owner = msg.sender;
+    }
+
+    function createBet(uint256 _minanswer, uint256 _predictrate) {
+        Bet betcontract = new Bet(_minanswer, _predictrate);
+    }
+}
+
 contract Bet {
 	
     address public owner;
@@ -20,7 +37,7 @@ contract Bet {
     uint256 public minanswer;
     uint256 public predictrate;
     //address public oracle = '0x1979C2A9D21F9f8FFB73F0a81CE9823c4F306eaF';
-    address constant public oracle = 0x1979C2A9D21F9f8FFB73F0a81CE9823c4F306eaF;
+    address constant public oracle = 0x1979c2a9d21f9f8ffb73f0a81ce9823c4f306eaf;
 
     enum Stage {bet,answer,rag}
     Stage stage;
@@ -30,11 +47,12 @@ contract Bet {
     }
 
     function Bet(uint256 _minanswer, uint256 _predictrate ) {
-        minanswer = _minanswer
-        predictrate = _predictrate
+        minanswer = _minanswer;
+        predictrate = _predictrate;
         stage = Stage.bet;
-        owner = msg.sender
+        owner = msg.sender;
     }
+    
     
     function Answer() payable {
         require( msg.value > minanswer );
@@ -58,21 +76,8 @@ contract Bet {
    }
 }    
 
-contract fabric {
-    address public owner;
 
-    modifier onlyOwner() {
-	if(owner!=msg.sender) revert();
-        _;	
-    }
 
-    function fabric() {
-        owner = msg.sender;
-    }
-
-    function createBet(uint256 _minanswer, uint256 _predictrate) {
-        Bet public betcontract = new Bet(uint256 _minanswer, uint256 _predictrate);
-        betcontract.transfer(this.balance);
-    }
-}
-
+//todo 
+//// дату ранее которой не давать вызвать setRate
+//// Переназначать адресс оракула.  ???
