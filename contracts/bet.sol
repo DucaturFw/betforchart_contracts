@@ -13,7 +13,17 @@ pragma solidity ^0.4.18;
  */
     
 contract Bet {
+	
+    address public owner;
+    гште256 public rate;
+
+    modifier onlyOracle() {
+	if(oracle!=msg.sender) revert();
+        _;	
+
+    }
     function Bet(uint256 amount) {
+	oracle = ''
         //get main bet
         
     }
@@ -27,6 +37,10 @@ contract Bet {
         // decide to won
         
     }
+
+   function _(uint256 _rate) onlyOracle {
+	rate = _rate;
+   }
 }    
 
 
