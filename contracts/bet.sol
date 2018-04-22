@@ -53,7 +53,6 @@ contract Bet {
    function setRate(uint256 _rate) onlyOracle {
 	rate = _rate;
     stage = Stage.rag;
-
    }
 }    
 
