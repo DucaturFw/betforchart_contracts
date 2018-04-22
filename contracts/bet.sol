@@ -39,8 +39,8 @@ contract Bet {
         
     }
     
-    function Answer(uint256 _amount) {
-        require(_amount > _minanswer );
+    function Answer() {
+        require( msg.value > minanswer );
         opponent = msg.sender;
         stage = Stage.answer;
         //get answer bet
